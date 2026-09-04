@@ -1,17 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        // Example: AWS credentials stored in Jenkins
-        AWS_ACCESS_KEY_ID     = credentials('aws-access-key')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-key')
-    }
-
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/your-org/terraform-infra.git',
+                    url: 'https://github.com/S-Raiyan/terrafrom-project.git',
                     credentialsId: 'github-creds'
             }
         }
@@ -35,18 +29,12 @@ pipeline {
             }
         }
 
-        stage('Terraform Apply') {
-            steps {
-                input message: "Approve to apply Terraform changes?"
-                sh 'terraform apply tfplan'
-            }
-        }
+        // ❌ No apply stage, since you don’t want to push infra
     }
 
     post {
         always {
-            echo 'Pipeline finished. Cleaning up workspace...'
-            cleanWs()
+            echo 'Pipeline finished. Terraform code validated successfully.'
         }
     }
 }
