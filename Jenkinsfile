@@ -12,20 +12,20 @@ pipeline {
 
         stage('Terraform Format & Validate') {
             steps {
-                bat 'terraform fmt -check'
-                bat 'terraform validate'
+                bat 'C:\\terraform\\terraform.exe fmt -check'
+                bat 'C:\\terraform\\terraform.exe validate'
             }
         }
 
         stage('Terraform Init') {
             steps {
-                bat 'terraform init'
+                bat 'C:\\terraform\\terraform.exe init'
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                bat 'terraform plan -out=tfplan'
+                bat 'C:\\terraform\\terraform.exe plan -out=tfplan'
             }
         }
 
