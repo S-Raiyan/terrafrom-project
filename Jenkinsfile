@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        AWS_ACCESS_KEY_ID = "dummy"
+        AWS_SECRET_ACCESS_KEY = "dummy"
+    }
+
     stages {
         stage('Checkout') {
             steps {
