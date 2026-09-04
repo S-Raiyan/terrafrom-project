@@ -10,16 +10,21 @@ pipeline {
             }
         }
 
-        stage('Terraform Format & Validate') {
+        stage('Terraform Format') {
             steps {
                 bat 'C:\\terraform_1.15.8_windows_386\\terraform.exe fmt -check'
-                bat 'C:\\terraform_1.15.8_windows_386\\terraform.exe validate'
             }
         }
 
         stage('Terraform Init') {
             steps {
                 bat 'C:\\terraform_1.15.8_windows_386\\terraform.exe init'
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                bat 'C:\\terraform_1.15.8_windows_386\\terraform.exe validate'
             }
         }
 
@@ -38,7 +43,7 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline finished. Terraform code validated and plan archived.'
+            echo 'Pipeline finished. Terraform code initialized, validated, and plan archived.'
         }
     }
 }
