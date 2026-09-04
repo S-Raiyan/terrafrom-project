@@ -12,29 +12,33 @@ pipeline {
 
         stage('Terraform Format & Validate') {
             steps {
-                sh 'terraform fmt -check'
-                sh 'terraform validate'
+                bat 'terraform fmt -check'
+                bat 'terraform validate'
             }
         }
 
         stage('Terraform Init') {
             steps {
-                sh 'terraform init'
+                bat 'terraform init'
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan -out=tfplan'
+                bat 'terraform plan -out=tfplan'
             }
         }
 
-        // ❌ No apply stage, since you don’t want to push infra
+        stage('Archive Plan') {
+            steps {
+                archiveArtifacts artifacts: 'tfplan', fingerprint: true
+            }
+        }
     }
 
     post {
         always {
-            echo 'Pipeline finished. Terraform code validated successfully.'
+            echo 'Pipeline finished. Terraform code validated and plan archived.'
         }
     }
 }
